@@ -51,7 +51,12 @@ if choose == 'No':
             fun.insertion_sort(listrand, 1)
     if array != 'No':
         print("Sorted array:")
-        print(listrand)
+        if case == 1:
+            print(listbest)
+        elif case == 2:
+            print(listworst)
+        else:     
+            print(listrand)
 else:
     time = [fun.bubble_sort(listbest, 0), fun.bubble_sort(listworst, 0),
             fun.bubble_sort(listrand, 0), fun.mod_bubble_sort(listbest, 0),
