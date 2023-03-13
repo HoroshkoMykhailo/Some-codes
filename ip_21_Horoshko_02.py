@@ -88,4 +88,4 @@ f = open(out, "w")
 f.write('%d\n' %(x))
 for i in range(u - 1):
     f.write("%d %d\n" %(outm[i][0], outm[i][1]))
-f.close
+f.close()
