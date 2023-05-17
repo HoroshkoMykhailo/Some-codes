@@ -1,5 +1,8 @@
 import random
 import string
+import time
+import numpy as np
+import matplotlib.pyplot as plt
 class Hashtable:
     def __init__(self, size=100):
         self.size = size  # Розмір хеш-таблиці
@@ -47,12 +50,14 @@ class Hashtable:
         """Отримання значення за ключем з хеш-таблиці"""
         global n1
         i = 0
+        start = time.time()
         b = True
         while b:
             n1 = n1 + 1
             j = self._hash_function(key, i)
             if self.table[j][0] == key:
-                return self.table[j][1]
+                t1 = time.time() - start
+                return (self.table[j][1], t1)
             else:
                 i = i + 1
             if i == self.size or self.table[j] is None:
@@ -111,12 +116,14 @@ def binarySearch(arr, x):
     global n2
     l = 0
     r = len(arr) - 1
+    start = time.time()
     while l <= r:
  
         mid = l + (r - l) // 2
         n2 = n2 + 1
         if arr[mid] == x:
-            return mid
+            end = time.time()
+            return (mid, end - start)
  
         elif arr[mid] < x:
             l = mid + 1
@@ -124,7 +131,8 @@ def binarySearch(arr, x):
         else:
             r = mid - 1
         n2 = n2 + 1
-    return -1
+    t2 = time.time() - start
+    return (-1, t2)
 
 def genar(size):
     return [i for i in range(1, size + 1)]
@@ -153,20 +161,23 @@ class DoubleLinkedList:
             self.tail = new_node
             
     def middle(self, start, last):
+        global n3
         if (start == None):
             return None
         slow = start
         fast = start.next
         while (fast != last):
+            n3 = n3 + 1
             fast = fast.next
             if (fast != last):
+                n3 = n3 + 1
                 slow = slow.next
                 fast = fast.next
         return slow
     
     def bin_search(self, value):
         global n3
-        n3 = n3 + 1
+        st = time.time()
         start = self.head
         last = None
         while True :
@@ -177,7 +188,8 @@ class DoubleLinkedList:
             # Якщо значення всередині
             n3 = n3 + 1
             if (mid.data == value):
-                return mid
+                t3 = time.time()-st
+                return (mid, t3)
             # Якщо значення більше за середину
             elif (mid.data < value):
                 start = mid.next
@@ -196,29 +208,41 @@ def genlist(size):
         l.push(i)
     return l
 
-if __name__ == '__main__':
+choose = input("Do you want to see a graph(Yes or No):")
+n1 = 0
+n2 = 0
+n3 = 0
+if choose == 'No' or choose == 'no':
     choice = input('What data structure do you want to choose(h for hashtable, a for array, l for linked list):')
     if choice == 'h' or choice =='H':
-        n1 = 0
         num = int(input('Enter number of elements in hashtable:'))
         h = rand_gen(num)
         v = h.find("ZRpklDExgLFOlsmYAzMR")
         print(n1)
         print(h.size)
-        print(v)
+        print(v[0])
+        print(v[1])
     elif choice =='a' or choice =='A':
-        n2 = 0
         num = int(input('Enter number of elements in array:'))
         x = random.randint(1, num)
         ar = genar(num)
         v = binarySearch(ar, x)
         print(n2)
-        print(v)
+        print(v[0])
+        print(v[1])
     else:
-        n3 = 0
         num = int(input('Enter number of elements in linked list:'))
         x = random.randint(1, num)
         l = genlist(num)
         v = l.bin_search(x)
         print(n3)
-        print(v.data)
+        print(v[0].data)
+        print(v[1])
+else:
+    x = [100, 1000, 5000, 10000, 20000]
+    y1 = [binarySearch(genar(100), 26)[1], binarySearch(genar(1000), 365)[1], binarySearch(genar(5000), 1268)[1], binarySearch(genar(10000), 2657)[1], binarySearch(genar(20000), 10598)[1]]
+    y2 = [genlist(100).bin_search(26)[1], genlist(1000).bin_search(365)[1], genlist(5000).bin_search(1268)[1], genlist(10000).bin_search(2657)[1], genlist(20000).bin_search(10598)[1]]
+    plt.plot(x, y1, label=r'$Array$')
+    plt.plot(x, y2, label=r'$Linkedlist$')
+    plt.legend(loc='best', fontsize=12)
+    plt.show()
