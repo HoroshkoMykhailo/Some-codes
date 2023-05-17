@@ -244,5 +244,7 @@ else:
     y2 = [genlist(100).bin_search(26)[1], genlist(1000).bin_search(365)[1], genlist(5000).bin_search(1268)[1], genlist(10000).bin_search(2657)[1], genlist(20000).bin_search(10598)[1]]
     plt.plot(x, y1, label=r'$Array$')
     plt.plot(x, y2, label=r'$Linkedlist$')
+    plt.xlabel('Size', fontsize='18')
+    plt.ylabel('Time(seconds)', fontsize='18')
     plt.legend(loc='best', fontsize=12)
     plt.show()
