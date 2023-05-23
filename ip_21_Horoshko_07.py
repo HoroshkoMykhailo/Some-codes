@@ -86,14 +86,20 @@ def findMonotonicPaths(x, S, path, result):
         result.append(list(path))
     if x.left is not None:
         findMonotonicPaths(x.left, S, path, result)
-    if x.left is None and x.right is None:
+    """if x.left is None and x.right is None:
         p = copylist(path)
         while len(p) > 1:
             p.pop(0)
             if to_sum(p) == S:
                 result.append(list(p))
+                """
     if x.right is not None:
        findMonotonicPaths(x.right, S, path, result)
+    p = copylist(path)
+    while len(p) > 1:
+        p.pop(0)
+        if to_sum(p) == S:
+            result.append(list(p))
     path.pop(len(path) - 1)   
 
 def to_sum(ar):
